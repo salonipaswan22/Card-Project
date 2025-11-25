@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Profile Card Studio</title>
+  <style>
+    :root{ --card-width:380px; --accent:#6c8cff; --bg:#f3f6ff }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:24px;background:linear-gradient(180deg,#eef3ff,white)}
+    .wrap{display:flex;gap:24px;align-items:flex-start}
+
+    
+    .card{width:var(--card-width);padding:18px;border-radius:12px;background:var(--bg);box-shadow:0 6px 18px rgba(40,40,90,.08);transition:background-color .25s,transform .15s}
+    .card.dark{background:#222;color:#fff}
+    .card .top{display:flex;gap:12px;align-items:center}
+    .avatar{width:84px;height:84px;border-radius:10px;object-fit:cover;background:#ddd}
+    h1.name{font-size:1.25rem;margin:0}
+    h2.role{font-size:.9rem;margin:4px 0;color:#555}
+    p.bio{margin-top:12px;white-space:pre-wrap}
+
+    .skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,.06);font-size:.85rem}
+    .chip .x{cursor:pointer;padding:2px 6px;border-radius:6px}
+    .chip.new{animation:pop .35s ease}
+    @keyframes pop{from{transform:scale(.85);opacity:.3}to{transform:scale(1);opacity:1}}
+
+    .details{margin-top:14px;padding:10px;border-radius:8px;background:rgba(0,0,0,.03)}
+    .hidden{display:none !important}
+
+    
+    .controls{min-width:380px;padding:14px;border-radius:12px;background:#fff;box-shadow:0 6px 24px rgba(20,30,80,.05)}
+    .row{display:flex;gap:8px;margin-bottom:10px}
+    label{font-size:.85rem;color:#333;margin-bottom:6px;display:block}
+    input[type='text'], textarea{width:100%;padding:8px;border:1px solid #ccd; border-radius:6px}
+    textarea{min-height:74px}
+    .themes{display:flex;gap:8px}
+    .theme{width:36px;height:36px;border-radius:8px;border:2px solid transparent;cursor:pointer}
+    .theme.active{outline:3px solid rgba(0,0,0,.06);transform:scale(1.05)}
+    .btn{padding:8px 10px;border-radius:8px;border:1px solid rgba(0,0,0,.08);cursor:pointer;background:#f7faff}
+    .btn.warn{background:#fff0f0}
+    .error{color:#b00020;font-size:.85rem;margin-top:6px}
+
+    .note{font-size:.85rem;color:#666}
+    .flex-between{display:flex;justify-content:space-between;align-items:center}
+
+    /* responsive */
+    @media (max-width:880px){.wrap{flex-direction:column}.controls{min-width:unset}}
+  </style>
+</head>
+<body>
+  <h1>Profile Card Studio — interactive DOM practice</h1>
+  <div class="wrap">
+
+    <!-- PROFILE CARD (main visual target) -->
+    <section id="studio" class="card" aria-label="profile card">
+      <div class="top">
+        <img id="avatar" class="avatar" src="https:
+        <div>
+          <h1 id="displayName" class="name">Alex Developer</h1>
+          <h2 id="displayRole" class="role">Frontend Engineer</h2>
+        </div>
+      </div>
+
+      <p id="displayBio" class="bio">I build small UI experiments and learn by doing.
+I love DOM APIs and tea ☕</p>
+
+      <div id="skillsContainer" class="skills">
+        <span class="chip">HTML <button class="x">×</button></span>
+        <span class="chip">CSS <button class="x">×</button></span>
+        <span class="chip">JavaScript <button class="x">×</button></span>
+      </div>
+
+      <div id="detailsBlock" class="details">
+        <div class="flex-between"><strong>Extra details</strong><small class="note">Visible by default</small></div>
+        <p class="note">Joined: Jan 15, 2023 — Location: Remote — Projects: 12</p>
+      </div>
+    </section>
+
+    <!-- CONTROL PANEL (where user manipulates the card) -->
+    <aside class="controls" id="controlPanel">
+      <div class="row">
+        <div style="flex:1">
+          <label for="nameInput">Name</label>
+          <input id="nameInput" type="text" value="Alex Developer">
+          <div id="nameError" class="error" style="display:none">Name can't be empty</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <label for="roleInput">Role</label>
+          <input id="roleInput" type="text" value="Frontend Engineer">
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <label for="bioInput">Bio</label>
+          <textarea id="bioInput">I build small UI experiments and learn by doing.
+I love DOM APIs and tea ☕</textarea>
+          <div class="note">Try adding line breaks — bio uses <code>innerText</code> in preview to demonstrate differences.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <label for="imgInput">Avatar image URL</label>
+          <input id="imgInput" type="text" placeholder="https://...">
+          <div id="imgError" class="error" style="display:none">Cannot load image, using placeholder.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div style="flex:1">
+          <label for="skillInput">Add a skill</label>
+          <div style="display:flex;gap:8px">
+            <input id="skillInput" type="text" placeholder="e.g. React">
+            <button id="addSkillBtn" class="btn">Add</button>
+            <button id="removeLastSkillBtn" class="btn warn">Remove last</button>
+          </div>
+          <div class="note">Press Enter to add. Empty skills are ignored.</div>
